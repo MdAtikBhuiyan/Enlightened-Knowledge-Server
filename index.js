@@ -32,8 +32,8 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
 
-        const allBookCollection = client.db('libraryBooks').collection('allBooks')
-
+        const allBookCollection = client.db('libraryBooks').collection('allBooks');
+        const borrowedBookCollection = client.db('libraryBooks').collection('borrowedBooks');
 
         // getting all categories book and all books 
         app.get('/allBooks', async (req, res) => {
@@ -91,6 +91,31 @@ async function run() {
             res.send(result)
         })
 
+        // update quantity
+        app.patch('/updateBookQuantity/:id', async (req, res) => {
+            const id = req.params.id;
+            const data = req.body;
+
+            console.log("update quantity", id, data);
+            const filter = { _id: new ObjectId(id) }
+
+            const updateQuantity = {
+                $set: {
+                    quantity: data.remaining,
+                }
+            }
+            const result = await allBookCollection.updateOne(filter, updateQuantity)
+            res.send(result)
+        })
+
+
+        // borrowdBook Collection
+        app.post('/borrowBook', async (req, res) => {
+            const data = req.body;
+            // console.log("borrowed data", data);
+            const result = await borrowedBookCollection.insertOne(data)
+            res.send(result)
+        })
 
 
 
