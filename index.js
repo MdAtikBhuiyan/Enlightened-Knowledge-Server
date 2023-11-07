@@ -35,9 +35,10 @@ async function run() {
         const allBookCollection = client.db('libraryBooks').collection('allBooks')
 
 
+        // getting all categories book and all books 
         app.get('/allBooks', async (req, res) => {
             const category = req.query;
-            console.log('category', category);
+            // console.log('category', category);
 
             let query = {};
             if (req.query?.category) {
@@ -49,6 +50,15 @@ async function run() {
             res.send(result)
         })
 
+        // adding books
+        app.post('/addBooks', async (req, res) => {
+
+            const addData = req.body;
+            // console.log('add data', addData);
+            const result = await allBookCollection.insertOne(addData)
+            res.send(result)
+
+        })
 
 
 
