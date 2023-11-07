@@ -50,6 +50,14 @@ async function run() {
             res.send(result)
         })
 
+        // single book details
+        app.get('/singleBook/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await allBookCollection.findOne(query)
+            res.send(result)
+        })
+
         // adding books
         app.post('/addBooks', async (req, res) => {
 
