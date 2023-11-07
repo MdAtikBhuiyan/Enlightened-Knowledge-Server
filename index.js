@@ -15,7 +15,7 @@ app.use(express.json())
 
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bbvd3eh.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -59,7 +59,29 @@ async function run() {
             res.send(result)
 
         })
+        // update book info
+        app.put('/updateBook/:id', async (req, res) => {
+            const data = req.body;
+            const id = req.params.id;
+            // console.log("updated data", data);
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
 
+            const updateData = {
+                $set: {
+                    img: data.img,
+                    name: data.name,
+                    quantity: data.quantity,
+                    author: data.author,
+                    category: data.category,
+                    rating: data.rating,
+                    description: data.description
+                }
+            }
+
+            const result = await allBookCollection.updateOne(filter, updateData, options)
+            res.send(result)
+        })
 
 
 
