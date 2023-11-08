@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 require('dotenv').config()
 
@@ -14,8 +14,6 @@ app.use(express.json())
 
 
 
-
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.bbvd3eh.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -94,6 +92,7 @@ async function run() {
         // update quantity
         app.patch('/updateBookQuantity/:id', async (req, res) => {
             const id = req.params.id;
+            console.log("idddd", id);
             const data = req.body;
 
             console.log("update quantity", id, data);
@@ -134,6 +133,7 @@ async function run() {
             res.send(result)
         })
 
+        
         // // books by id array 
         // app.post('/booksById', async (req, res) => {
         //     const ids = req.body;
