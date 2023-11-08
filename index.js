@@ -116,7 +116,36 @@ async function run() {
             const result = await borrowedBookCollection.insertOne(data)
             res.send(result)
         })
+        app.get('/borrowBook', async (req, res) => {
+            const email = req.query?.email;
+            console.log('user borrowed', email);
+            const result = await borrowedBookCollection.find().toArray();
 
+            const userBasedBooks = result?.filter(book => book.userEmail == email);
+            res.send(userBasedBooks)
+        })
+
+        // delete borrowed book 
+        app.delete('/borrowBook/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+
+            const result = await borrowedBookCollection.deleteOne(query)
+            res.send(result)
+        })
+
+        // // books by id array 
+        // app.post('/booksById', async (req, res) => {
+        //     const ids = req.body;
+        //     const idsWithObjectId = ids.map(id => new ObjectId(id))
+        //     const query = {
+        //         _id: {
+        //             $in: idsWithObjectId
+        //         }
+        //     }
+        //     const result = await allBookCollection.find(query).toArray()
+        //     res.send(result)
+        // })
 
 
 
