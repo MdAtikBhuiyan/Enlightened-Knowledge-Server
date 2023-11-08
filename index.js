@@ -118,7 +118,7 @@ async function run() {
         })
         app.get('/borrowBook', async (req, res) => {
             const email = req.query?.email;
-            console.log('user borrowed', email);
+            // console.log('user borrowed', email);
             const result = await borrowedBookCollection.find().toArray();
 
             const userBasedBooks = result?.filter(book => book.userEmail == email);
@@ -146,9 +146,6 @@ async function run() {
         //     const result = await allBookCollection.find(query).toArray()
         //     res.send(result)
         // })
-
-
-
 
 
 
