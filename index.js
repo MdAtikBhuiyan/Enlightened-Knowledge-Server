@@ -41,7 +41,7 @@ async function run() {
             let query = {};
             if (req.query?.category) {
                 query = {
-                    category: req.query.category
+                    category: req.query.category.toLowerCase()
                 }
             }
             const result = await allBookCollection.find(query).toArray()
