@@ -96,8 +96,9 @@ async function run() {
             console.log("logging out", user);
 
             // clear cookies from client side 
-            res.clearCookie('library_token', { maxAge: 0 })
+            res.clearCookie('library_token', { maxAge: 0, secure: true, sameSite: 'none' } )
                 .send({ success: true })
+
         })
 
 
