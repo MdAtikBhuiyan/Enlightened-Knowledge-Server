@@ -103,15 +103,15 @@ async function run() {
 
 
         // getting all categories book and all books 
-        app.get('/allBooks', verifyToken, async (req, res) => {
+        app.get('/allBooks', async (req, res) => {
 
             // console.log("jwt decoded code", req.user)
             const category = req.query;
             // console.log('category', category);
 
-            if (req.user?.email !== req.query?.email) {
-                return res.status(403).send({ message: "Forbidden access" })
-            }
+            // if (req.user?.email !== req.query?.email) {
+            //     return res.status(403).send({ message: "Forbidden access" })
+            // }
 
             let query = {};
             if (req.query?.category) {
